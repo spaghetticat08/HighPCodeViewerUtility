@@ -18,6 +18,9 @@ package highpcodeviewer;
 import java.awt.BorderLayout;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,6 +35,7 @@ import javax.swing.text.DefaultHighlighter;
 import docking.ActionContext;
 import docking.WindowPosition;
 import docking.action.DockingAction;
+import docking.action.MenuData;
 import docking.action.ToolBarData;
 import ghidra.app.decompiler.DecompInterface;
 import ghidra.app.decompiler.DecompileOptions;
@@ -45,6 +49,7 @@ import ghidra.program.model.listing.Program;
 import ghidra.program.model.pcode.HighFunction;
 import ghidra.program.model.pcode.PcodeOpAST;
 import ghidra.program.util.ProgramLocation;
+import ghidra.util.Msg;
 import resources.Icons;
 
 public class HighPCodeViewerProvider extends ComponentProviderAdapter {
@@ -56,6 +61,7 @@ public class HighPCodeViewerProvider extends ComponentProviderAdapter {
 	private Function currentFunction;
 	private DecompInterface ifc;
 	
+	private DockingAction helloAction;
 	class LineNumberPair
 	{
 		public LineNumberPair(int startLine, int endLine) {
@@ -74,6 +80,30 @@ public class HighPCodeViewerProvider extends ComponentProviderAdapter {
 		setDefaultWindowPosition(WindowPosition.BOTTOM);
 		setTitle("High P-Code Viewer");
 		setVisible(true);
+		
+		helloAction = new DockingAction("Hello World", getName()) {
+			@Override
+			public void actionPerformed(ActionContext context) {
+				// dump the current output into a file
+				String pcodeText = textArea.getText();
+				// Need to figure out how to retrieve current function
+				//String selectedFunction;
+				try {
+					BufferedWriter outputFile = new BufferedWriter(new FileWriter("HighPCodeViewerOutput.txt"));
+					outputFile.write(pcodeText);
+					outputFile.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Msg.info(this, "hello world!");
+			}
+		};
+		helloAction.setEnabled(true);
+		helloAction.setToolBarData(new ToolBarData(Icons.SAVE_AS_ICON));
+		/*helloAction.setMenuBarData(new MenuData(new String[] { "View", "Hello World" })); */
+		tool.addLocalAction(this, helloAction);
+		//tool.addAction(helloAction);
 	}
 	
 	void initializeDecompiler()
