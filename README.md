@@ -3,6 +3,8 @@ This is a Ghidra plugin that adds a window showing the high P-code for the curre
 
 ![HighPCodeViewer](https://user-images.githubusercontent.com/77587819/224444631-112f70f1-544e-416c-89c9-13257e11ab53.gif)
 
+This has been forked from https://github.com/twevs/HighPCodeViewer and slightly adapted to write the currently displayed P-Code to a file. The save icon on the right top corner will save the output to a file. 
+
 ## What is high P-code and why can it be useful?
 
 High P-code is Ghidra's final intermediate representation of the decompiled binary, coming after data and control flow analysis and before the generation of pseudo-C code:
