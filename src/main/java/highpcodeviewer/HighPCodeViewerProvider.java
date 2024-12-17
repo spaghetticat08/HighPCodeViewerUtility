@@ -81,7 +81,7 @@ public class HighPCodeViewerProvider extends ComponentProviderAdapter {
 		setTitle("High P-Code Viewer");
 		setVisible(true);
 		
-		helloAction = new DockingAction("Hello World", getName()) {
+		saveAction = new DockingAction("Save", getName()) {
 			@Override
 			public void actionPerformed(ActionContext context) {
 				// dump the current output into a file
@@ -96,14 +96,14 @@ public class HighPCodeViewerProvider extends ComponentProviderAdapter {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Msg.info(this, "hello world!");
+				Msg.info(this, "Save");
 			}
 		};
-		helloAction.setEnabled(true);
-		helloAction.setToolBarData(new ToolBarData(Icons.SAVE_AS_ICON));
-		/*helloAction.setMenuBarData(new MenuData(new String[] { "View", "Hello World" })); */
-		tool.addLocalAction(this, helloAction);
-		//tool.addAction(helloAction);
+		saveAction.setEnabled(true);
+		saveAction.setToolBarData(new ToolBarData(Icons.SAVE_AS_ICON));
+		/*saveAction.setMenuBarData(new MenuData(new String[] { "View", "Save" })); */
+		tool.addLocalAction(this, saveAction);
+		//tool.addAction(saveAction);
 	}
 	
 	void initializeDecompiler()
